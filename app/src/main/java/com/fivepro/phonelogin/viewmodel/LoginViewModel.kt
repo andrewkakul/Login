@@ -1,14 +1,13 @@
 package com.fivepro.phonelogin.viewmodel
 
 import android.app.Application
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.fivepro.phonelogin.model.ResponseApi
 import com.fivepro.phonelogin.model.UserInfo
 import com.fivepro.phonelogin.model.UserLogin
+import com.fivepro.phonelogin.view.MessageInterface
 import com.fivepro.phonelogin.viewmodel.database.entity.UserEntity
 import com.fivepro.phonelogin.viewmodel.network.NetworkManager
 import com.fivepro.phonelogin.viewmodel.database.UsersRoomDatabase
@@ -32,7 +31,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun loginUser(db: UsersRoomDatabase, context: Context, userLogin: UserLogin){
+    fun loginUser(db: UsersRoomDatabase, messageInterface: MessageInterface, userLogin: UserLogin){
         viewModelScope.launch(Dispatchers.IO) {
             val service = NetworkManager.createService()
             val call = service.loginUser(userLogin)
@@ -47,13 +46,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application) {
                             responseAnswer.postValue(true)
                         }
                         catch (e:Exception){
-                            Toast.makeText(context, "User unsigned", Toast.LENGTH_SHORT).show()
+                            messageInterface.showUnsignedMessage()
                             responseAnswer.postValue(false)
                         }
                     }
-
                     override fun onFailure(call: Call<ResponseApi>, t: Throwable) {
-                        Toast.makeText(context, "User unsigned", Toast.LENGTH_SHORT).show()
+                        messageInterface.showUnsignedMessage()
                     }
                 })
 

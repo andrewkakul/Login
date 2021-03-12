@@ -5,15 +5,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.fivepro.phonelogin.R
 import com.fivepro.phonelogin.databinding.FragmentLoginBinding
 import com.fivepro.phonelogin.viewmodel.database.UsersRoomDatabase
 import com.fivepro.phonelogin.model.UserLogin
+import com.fivepro.phonelogin.view.MessageInterface
 import com.fivepro.phonelogin.viewmodel.LoginViewModel
 
-class LoginFragment : Fragment() {
+class LoginFragment : Fragment(), MessageInterface {
 
     private lateinit var binding: FragmentLoginBinding
     private lateinit var loginViewModel: LoginViewModel
@@ -36,7 +38,7 @@ class LoginFragment : Fragment() {
                 binding.phoneNumberEditText.text.toString(),
                 binding.passwordEditText.text.toString())
 
-            loginViewModel.loginUser(db, requireContext(), userLogin)
+            loginViewModel.loginUser(db,this, userLogin)
         }
     }
 
@@ -49,4 +51,10 @@ class LoginFragment : Fragment() {
             }
         })
     }
+
+    override fun showUnsignedMessage() {
+        Toast.makeText(context, "User unsigned", Toast.LENGTH_SHORT).show()
+    }
+
 }
+
