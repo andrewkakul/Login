@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">PhoneLogin</string>
+    //Login
+    <string name="button_continue">Continue</string>
+    <string name="login_phone_number">Phone number</string>
+    <string name="login_password">Password</string>
+    <string name="log_in">Login</string>
+    //Profile
+    <string name="profile">Profile</string>
+    <string name="surname">Surname</string>
+    <string name="name">Name</string>
+    <string name="phone_number">Phone number</string>
+</resources>
